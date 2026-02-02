@@ -1,0 +1,153 @@
+{
+  "$schema": "https://json-schema.org/draft-07/schema#",
+  "description": "Agent-First Development Hub & Spoke Accelerator - Configuration for agent dependencies and auto-update triggers",
+  "version": "1.0.0",
+  "lastUpdated": "2026-02-02",
+  "hub": {
+    "name": "[YOUR-PROJECT-NAME]",
+    "description": "[YOUR PROJECT DESCRIPTION]",
+    "owner": "[YOUR NAME/TEAM]",
+    "repository": "[YOUR-REPO-URL]"
+  },
+  "spokes": [
+    {
+      "name": "conventions",
+      "path": ".github/instructions/conventions.md",
+      "description": "Development standards, git commit rules, and task tracking",
+      "triggers": ["hub.update", "standards.change"]
+    },
+    {
+      "name": "engineering-codebase-map",
+      "path": ".github/instructions/engineering-codebase-map.md",
+      "description": "File locations, directory structure, and code organization patterns",
+      "triggers": ["hub.update", "structure.change"]
+    },
+    {
+      "name": "operations-deployment",
+      "path": ".github/instructions/operations-deployment.md",
+      "description": "Deployment procedures, infrastructure, and operational guidelines",
+      "triggers": ["hub.update", "deployment.change"]
+    }
+    // Add your project-specific spokes here:
+    // {
+    //   "name": "business-strategy",
+    //   "path": ".github/instructions/business-strategy.md",
+    //   "description": "Market positioning, pricing, and growth strategy",
+    //   "triggers": ["hub.update", "business.change"]
+    // },
+    // {
+    //   "name": "product-roadmap",
+    //   "path": ".github/instructions/product-roadmap.md",
+    //   "description": "Feature priorities and product development plan",
+    //   "triggers": ["hub.update", "product.change"]
+    // },
+    // {
+    //   "name": "architecture-decisions",
+    //   "path": ".github/instructions/architecture-decisions.md",
+    //   "description": "ADRs and technical design decisions",
+    //   "triggers": ["hub.update", "architecture.change"]
+    // }
+  ],
+  "agents": [
+    {
+      "name": "Plan",
+      "type": "research",
+      "description": "Researches and outlines multi-step plans",
+      "dependencies": [],
+      "triggers": [
+        {
+          "event": "hub.documentation.update",
+          "action": "refresh-knowledge-base"
+        }
+      ],
+      "autoUpdate": true
+    },
+    {
+      "name": "AppModernization",
+      "type": "implementation",
+      "description": "Modernize Java/Python applications with best practices",
+      "dependencies": ["Plan"],
+      "triggers": [
+        {
+          "event": "Plan.workflow.complete",
+          "action": "execute-modernization-plan"
+        }
+      ],
+      "autoUpdate": true
+    },
+    {
+      "name": "CodeReview",
+      "type": "validation",
+      "description": "Automated code review and quality assurance",
+      "dependencies": ["Plan", "AppModernization"],
+      "triggers": [
+        {
+          "event": "AppModernization.code.change",
+          "action": "trigger-review"
+        }
+      ],
+      "autoUpdate": true
+    },
+    {
+      "name": "Documentation",
+      "type": "documentation",
+      "description": "Generates and maintains technical documentation",
+      "dependencies": ["Plan", "AppModernization", "CodeReview"],
+      "triggers": [
+        {
+          "event": "*.code.change",
+          "action": "update-docs"
+        }
+      ],
+      "autoUpdate": true
+    }
+    // Add your project-specific agents here:
+    // {
+    //   "name": "[YourAgent]",
+    //   "type": "implementation|validation|documentation|research",
+    //   "description": "[What this agent does]",
+    //   "dependencies": ["[OtherAgent1]", "[OtherAgent2]"],
+    //   "triggers": [
+    //     {
+    //       "event": "[trigger.event]",
+    //       "action": "[action-to-take]"
+    //     }
+    //   ],
+    //   "autoUpdate": true
+    // }
+  ],
+  "updateTriggers": {
+    "hub": ["documentation", "workflow", "patterns", "standards"],
+    "propagation": "cascade",
+    "validationRequired": true
+  },
+  "documentationEnforcement": [
+    // Enforce documentation updates when specific code paths change
+    // Uncomment and customize for your project:
+    // {
+    //   "path_globs": ["src/**"],
+    //   "required_docs": [
+    //     ".github/instructions/engineering-codebase-map.md"
+    //   ],
+    //   "required": true,
+    //   "exemptions": ["**/*.test.ts", "**/*.spec.ts", "src/test-utils/**"]
+    // },
+    // {
+    //   "path_globs": ["src/api/**", "src/services/**"],
+    //   "required_docs": [
+    //     ".github/instructions/engineering-codebase-map.md",
+    //     ".github/instructions/operations-deployment.md"
+    //   ],
+    //   "required": true,
+    //   "exemptions": []
+    // },
+    // {
+    //   "path_globs": ["infra/**", ".github/workflows/**"],
+    //   "required_docs": [
+    //     ".github/instructions/operations-deployment.md"
+    //   ],
+    //   "required": true,
+    //   "exemptions": []
+    // }
+  ]
+}
