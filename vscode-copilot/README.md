@@ -27,14 +27,18 @@ The Agent-First Development Hub implements a **hub-and-spoke pattern** where:
 
 ## 🚀 Quick Start
 
-### 1. Copy This Template to Your Project
+### 1. Copy the `.github` Folder to Your Project
+
+**Important:** Copy the contents of `vscode-copilot/.github/` into your project's `.github/` directory:
 
 ```bash
-# Copy the structure
-cp -r .github /path/to/your-project/
+# From this repo's root, copy to your project
+cp -r vscode-copilot/.github /path/to/your-project/
 
-# Or fork/clone this repo
-git clone <your-repo-url>
+# This will add:
+# your-project/.github/copilot-instructions.md
+# your-project/.github/doc-mapping.json
+# your-project/.github/instructions/*.md
 ```
 
 ### 2. Customize the Files
@@ -168,7 +172,6 @@ Contributions welcome! This is a living template that improves through usage.
 
 - [GitHub Copilot Documentation](https://docs.github.com/en/copilot)
 - [VS Code Copilot Extension](https://marketplace.visualstudio.com/items?itemName=GitHub.copilot)
-- Real-world example: `receiptclaimer/.github/`
 
 ---
 
